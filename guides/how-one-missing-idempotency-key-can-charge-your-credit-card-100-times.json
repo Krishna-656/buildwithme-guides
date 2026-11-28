@@ -1,0 +1,47 @@
+{
+  "title": "How One Missing Idempotency Key Can Charge Your Credit Card 100 Times \u2014 Engineering Cheat Sheet",
+  "subtitle": "Preventing accidental double-charging via guaranteed request execution state management.",
+  "summary": "Idempotency ensures that performing an operation multiple times yields the same result as performing it once. In distributed systems, it is the critical safeguard against retries, network partitions, and race conditions that cause duplicate side effects like financial transactions.",
+  "key_concepts": [
+    {
+      "name": "Idempotency Key",
+      "detail": "A unique, client-generated identifier (usually a UUID) included in the request header, allowing the server to recognize and ignore duplicate requests within a specific temporal window."
+    },
+    {
+      "name": "State Locking",
+      "detail": "The mechanism where a server uses the idempotency key to perform a 'check-and-set' operation on a persistent store (e.g., Redis/Postgres) before executing the primary business logic."
+    },
+    {
+      "name": "Linearizability",
+      "detail": "Ensuring that even under concurrent retries, the system maintains a strict ordering and single-execution guarantee, preventing the classic 'lost update' or 'duplicate execution' anomalies."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "curl -X POST /payments -H 'Idempotency-Key: uuid-v4-string' -d '{\"amount\": 100}'",
+      "explanation": "Standard pattern for client-side request marking to ensure server-side deduplication logic triggers correctly."
+    },
+    {
+      "language": "python",
+      "code": "if cache.set(key, 'processing', nx=True, ex=3600): try: process() except: cache.delete(key)",
+      "explanation": "Atomically sets a lock using Redis `NX` (Not Exists) to ensure only the first request succeeds; subsequent requests return 409 Conflict."
+    }
+  ],
+  "best_practices": [
+    "Always persist idempotency keys in a high-availability database with an appropriate TTL for deduplication window.",
+    "Implement the 'Request-Processing-Success' state machine pattern to return cached responses for retried duplicate requests.",
+    "Ensure idempotency keys are generated at the client level before the network call starts to ensure consistency across retries.",
+    "Use distributed locks (e.g., Redlock) or database unique constraints on the key column to prevent race conditions in distributed environments."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you handle a scenario where the client sends a retry, but the first request is still being processed?",
+      "answer": "Implement a 'Pending' status in the idempotency store. If a subsequent request arrives with the same key, return a '429 Too Many Requests' or '202 Accepted' status, forcing the client to poll rather than triggering a redundant transaction execution."
+    }
+  ],
+  "topic": "How One Missing Idempotency Key Can Charge Your Credit Card 100 Times",
+  "slug": "how-one-missing-idempotency-key-can-charge-your-credit-card-100-times",
+  "keyword": "ONE",
+  "created_at": "2026-11-27T03:35:00.027328+00:00"
+}

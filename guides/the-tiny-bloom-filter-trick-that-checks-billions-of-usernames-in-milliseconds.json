@@ -1,0 +1,47 @@
+{
+  "topic": "The Tiny Bloom Filter Trick That Checks Billions of Usernames in Milliseconds",
+  "slug": "the-tiny-bloom-filter-trick-that-checks-billions-of-usernames-in-milliseconds",
+  "keyword": "TINY",
+  "title": "The Tiny Bloom Filter Trick That Checks Billions of Usernames in Milliseconds \u2014 Quick Engineering Reference",
+  "subtitle": "Core architecture, cheat sheet commands, best practices, and interview takeaway.",
+  "summary": "A rapid technical breakdown of The Tiny Bloom Filter Trick That Checks Billions of Usernames in Milliseconds covering architecture principles, critical edge cases, and production guidelines.",
+  "key_concepts": [
+    {
+      "name": "System Architecture & Flow",
+      "detail": "Decoupled components in The Tiny Bloom Filter Trick That Checks Billions of Usernames in Milliseconds communicate through well-defined protocol contracts, optimizing throughput and fault tolerance."
+    },
+    {
+      "name": "Scalability & State Management",
+      "detail": "Horizontally partitioned state with idempotent retries prevents split-brain conditions and backpressure bottlenecks."
+    },
+    {
+      "name": "Observability & Fault Domains",
+      "detail": "Health probes, structured latency percentiles (p99), and distributed tracing ensure rapid root-cause isolation."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "# Quick start / inspect command\ncurl -fsSL https://api.local/status | jq .",
+      "explanation": "Query cluster or process health state with formatted JSON output."
+    },
+    {
+      "language": "python",
+      "code": "# Production retry pattern with exponential backoff\nimport time\n\nfor attempt in range(3):\n    try:\n        response = execute_task()\n        break\n    except Exception as err:\n        time.sleep(2 ** attempt)",
+      "explanation": "Standard exponential backoff loop prevents cascading thundering herds."
+    }
+  ],
+  "best_practices": [
+    "Always implement timeout boundaries on all outbound remote calls.",
+    "Enforce idempotency tokens on state mutation endpoints.",
+    "Monitor p99 latency rather than averages to detect cold-start outliers.",
+    "Use structured logging with unified correlation IDs across service boundaries."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you resolve bottlenecks in The Tiny Bloom Filter Trick That Checks Billions of Usernames in Milliseconds?",
+      "answer": "Isolate the slow stage (I/O, CPU, or locks) using tracing, introduce caching or message buffering, and scale worker replicas horizontally."
+    }
+  ],
+  "created_at": "2026-11-25T14:43:27.090671+00:00"
+}

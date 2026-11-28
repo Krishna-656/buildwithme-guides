@@ -1,0 +1,47 @@
+{
+  "title": "How a Single Typo in 2008 Crashed 20% of Global YouTube \u2014 Engineering Cheat Sheet",
+  "subtitle": "Systemic failure analysis: Configuration management, blast radius, and recovery strategies.",
+  "summary": "In 2008, a typo in a load balancer configuration file caused a massive outage, impacting 20% of YouTube traffic. This incident serves as a foundational case study in cascading failures, the importance of configuration validation, and the necessity of automated canary testing.",
+  "key_concepts": [
+    {
+      "name": "Configuration Drift",
+      "detail": "The phenomenon where production environments diverge from intended states due to manual changes, necessitating automated configuration management and infrastructure-as-code (IaC) to ensure consistency and auditability."
+    },
+    {
+      "name": "Blast Radius Control",
+      "detail": "The measure of a system's exposure to a single point of failure; reducing blast radius requires isolating traffic paths and modularizing components to prevent global outage propagation."
+    },
+    {
+      "name": "Validation Pipelines",
+      "detail": "Critical gatekeeping mechanisms that perform syntax checking, dry-runs, and semantic validation on configuration changes before deployment to production environments to prevent catastrophic human-error outages."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "nginx -t && systemctl reload nginx",
+      "explanation": "Validates Nginx configuration syntax before applying changes, preventing service-breaking typos from reaching active processes."
+    },
+    {
+      "language": "python",
+      "code": "try:\n    apply_config(new_config)\nexcept ValidationError as e:\n    rollback_to_last_known_good()",
+      "explanation": "Implements a transactional configuration update pattern with automated rollback mechanisms if validation or health checks fail post-deployment."
+    }
+  ],
+  "best_practices": [
+    "Treat configuration as code: apply CI/CD pipelines, unit tests, and peer code reviews to all configuration changes.",
+    "Implement phased canary deployments: roll out changes to a small subset of servers before global saturation.",
+    "Enforce immutable infrastructure principles to prevent manual, ad-hoc modifications in live production environments.",
+    "Ensure rapid rollback capabilities exist; recovery speed must always be prioritized over faultless deployments."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you minimize the risk of a configuration-based outage in a distributed system?",
+      "answer": "Utilize schema validation and linting in a CI/CD pipeline to catch typos before deployment. Pair this with a 'canary' release strategy and automated rollback triggers that detect health degradation immediately after a change is pushed."
+    }
+  ],
+  "topic": "How a Single Typo in 2008 Crashed 20% of Global YouTube",
+  "slug": "how-a-single-typo-in-2008-crashed-20-of-global-youtube",
+  "keyword": "SINGLE",
+  "created_at": "2026-11-24T06:55:58.220929+00:00"
+}

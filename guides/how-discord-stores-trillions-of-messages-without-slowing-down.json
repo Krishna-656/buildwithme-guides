@@ -1,0 +1,47 @@
+{
+  "title": "How Discord Stores Trillions of Messages Without Slowing Down \u2014 Engineering Cheat Sheet",
+  "subtitle": "Scaling extreme message volume using Cassandra, sharding, and optimized data modeling.",
+  "summary": "Discord migrated from MongoDB to Apache Cassandra to handle massive write throughput and ensure linear scalability. This architectural shift leverages intelligent row-key design and physical data partitioning to maintain low latency across trillions of records.",
+  "key_concepts": [
+    {
+      "name": "Cassandra Partitioning",
+      "detail": "Data is sharded by channel_id, grouping related messages together on the same physical nodes to ensure sequential disk reads and efficient query performance at petabyte scale."
+    },
+    {
+      "name": "Time-Bucket Partitioning",
+      "detail": "Each partition contains messages within a specific time range to prevent partition hotspots and manage heap memory overhead, enabling fast lookups even as message history grows indefinitely."
+    },
+    {
+      "name": "Write Path Optimization",
+      "detail": "Discord leverages Cassandra's LSM-tree architecture, which converts random writes into sequential disk I/O via Memtables and SSTables, bypassing the heavy locking overhead common in traditional B-Tree databases."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "nodetool cleanup discord_messages",
+      "explanation": "Runs post-compaction cleanup to remove keys no longer belonging to the node after a cluster topology change."
+    },
+    {
+      "language": "python",
+      "code": "row_key = f'{channel_id}:{timestamp // bucket_size}'",
+      "explanation": "Composite key construction pattern to distribute data evenly across the cluster while ensuring range-based queries remain performant."
+    }
+  ],
+  "best_practices": [
+    "Avoid wide partitions; keep bucket sizes limited to prevent JVM garbage collection pauses.",
+    "Prioritize sequential I/O patterns by aligning data models with query access paths.",
+    "Implement robust observability to track compaction stress and SSTable read latency.",
+    "Choose eventually consistent reads only when necessary to favor high availability and write throughput."
+  ],
+  "interview_qa": [
+    {
+      "question": "Why did Discord switch from MongoDB to Cassandra for message storage?",
+      "answer": "MongoDB's write throughput hit a ceiling due to index size and replication lag, while Cassandra's LSM-tree storage engine supports high-concurrency writes and linear horizontal scaling. Cassandra avoids the lock contention found in traditional databases, allowing Discord to maintain performance as data cardinality explodes."
+    }
+  ],
+  "topic": "How Discord Stores Trillions of Messages Without Slowing Down",
+  "slug": "how-discord-stores-trillions-of-messages-without-slowing-down",
+  "keyword": "DISCORD",
+  "created_at": "2026-11-25T02:42:12.388609+00:00"
+}

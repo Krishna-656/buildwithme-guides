@@ -1,0 +1,47 @@
+{
+  "title": "Why New Paint Can Cool Down Buildings Without Any Electricity \u2014 Engineering Cheat Sheet",
+  "subtitle": "Passive radiative cooling through high-albedo, emissive molecular engineering.",
+  "summary": "Radiative cooling paints leverage sub-ambient temperature drops by reflecting solar radiation and emitting thermal energy through the atmospheric transparency window. For engineers, this represents a passive, zero-compute optimization for thermal management in data centers and edge infrastructure.",
+  "key_concepts": [
+    {
+      "name": "Atmospheric Transparency Window",
+      "detail": "The 8-13 \u03bcm infrared wavelength range where Earth's atmosphere is transparent; emitting thermal radiation at these frequencies allows heat to escape directly into deep space."
+    },
+    {
+      "name": "Solar Reflectance (Albedo)",
+      "detail": "High-index materials (e.g., Barium Sulfate/Teflon) reflect up to 98% of incident solar irradiance, minimizing heat gain from short-wavelength photons before thermal absorption can occur."
+    },
+    {
+      "name": "Radiative Cooling Equilibrium",
+      "detail": "Thermal balance achieved when emitted long-wave infrared radiation exceeds absorbed solar energy, driving surface temperatures below ambient levels without mechanical power input."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "curl -s http://sensor-node/thermal | jq '.surface_temp - .ambient_temp'",
+      "explanation": "Calculates the delta T (cooling offset) to verify paint efficiency against localized sensor telemetry."
+    },
+    {
+      "language": "python",
+      "code": "def calculate_net_flux(T_surface, T_ambient, alpha, epsilon):\n    return (epsilon * sigma * T_surface**4) - (alpha * solar_irradiance)",
+      "explanation": "Models the net energy flux where epsilon and alpha represent surface emissivity and solar absorptivity constants."
+    }
+  ],
+  "best_practices": [
+    "Prioritize high-emissivity coatings (\u03b5 > 0.95) to maximize infrared energy transmission through the atmospheric window.",
+    "Verify surface morphology; particle packing density is critical to achieving Mie scattering across the full solar spectrum.",
+    "Account for humidity interference; atmospheric water vapor absorbs IR radiation, reducing the cooling potential in tropical climates.",
+    "Combine with thermal insulation to decouple interior temperature from exterior fluctuations, preventing cold-soak condensation."
+  ],
+  "interview_qa": [
+    {
+      "question": "How does radiative cooling differ from standard high-albedo (white) paint?",
+      "answer": "Standard white paint reflects visible light but often absorbs infrared heat, leading to near-ambient temperatures. Radiative cooling paint specifically engineers high emissivity in the 8-13 \u03bcm range to dump heat into space, achieving sub-ambient cooling."
+    }
+  ],
+  "topic": "Why New Paint Can Cool Down Buildings Without Any Electricity",
+  "slug": "why-new-paint-can-cool-down-buildings-without-any-electricity",
+  "keyword": "NEW",
+  "created_at": "2026-11-26T07:12:57.056691+00:00"
+}

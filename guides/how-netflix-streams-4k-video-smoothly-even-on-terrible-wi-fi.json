@@ -1,0 +1,47 @@
+{
+  "title": "How Netflix Streams 4K Video Smoothly Even on Terrible Wi-Fi \u2014 Engineering Cheat Sheet",
+  "subtitle": "Optimizing media delivery through adaptive bitrate, intelligent caching, and network resilience.",
+  "summary": "This sheet details the architectural strategies Netflix uses to maintain high-quality streaming over unstable connections. It focuses on adaptive bitrate streaming, content delivery networks (CDN), and predictive buffering to minimize playback interruption.",
+  "key_concepts": [
+    {
+      "name": "Adaptive Bitrate Streaming (ABR)",
+      "detail": "Client-side logic dynamically adjusts video quality (bitrate/resolution) based on current network throughput and device capabilities, preventing stalls by requesting smaller segments during congestion periods."
+    },
+    {
+      "name": "Open Connect CDN",
+      "detail": "Netflix's custom edge-caching hardware located inside ISP data centers, reducing latency and transit costs by serving content from the closest geographical node to the end user."
+    },
+    {
+      "name": "Predictive Buffering",
+      "detail": "Algorithms pre-fetch future video chunks into the client buffer based on historical throughput patterns, providing a safety net against transient network drops and jitter."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "ffmpeg -i input.mp4 -c:v libx264 -x264-params \"nal-hrd=cbr\" -b:v 5M -maxrate 5M -bufsize 10M output.mp4",
+      "explanation": "Creates a Constant Bitrate (CBR) stream segment, essential for consistent ABR switching without causing decoder jitter."
+    },
+    {
+      "language": "python",
+      "code": "def select_bitrate(measured_bw, safety_factor=0.8):\n    return next(b for b in sorted_bitrates if b < (measured_bw * safety_factor))",
+      "explanation": "A simplified heuristic for an ABR algorithm that selects the highest sustainable bitrate while applying a safety buffer to account for variance."
+    }
+  ],
+  "best_practices": [
+    "Prioritize low-latency manifests to allow for faster adaptation to network state changes.",
+    "Implement aggressive segment-level caching at the edge to reduce load on origin servers.",
+    "Use multi-CDN routing strategies to mitigate localized ISP outages or peering congestion.",
+    "Monitor 'Rebuffer Ratio' and 'Join Time' as the primary KPIs for streaming Quality of Experience (QoE)."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you decide when to switch bitrates in an ABR system without causing user-perceived quality flapping?",
+      "answer": "Implement a hysteresis mechanism or a 'buffer-occupancy' based controller rather than relying solely on throughput estimation. By prioritizing buffer depth, you prevent unnecessary down-switching during transient spikes and ensure stability."
+    }
+  ],
+  "topic": "How Netflix Streams 4K Video Smoothly Even on Terrible Wi-Fi",
+  "slug": "how-netflix-streams-4k-video-smoothly-even-on-terrible-wi-fi",
+  "keyword": "NETFLIX",
+  "created_at": "2026-11-25T10:43:13.201532+00:00"
+}

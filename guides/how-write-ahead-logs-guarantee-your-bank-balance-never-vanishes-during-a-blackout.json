@@ -1,0 +1,47 @@
+{
+  "title": "How Write-Ahead Logs Guarantee Your Bank Balance Never Vanishes During a Blackout \u2014 Engineering Cheat Sheet",
+  "subtitle": "Ensuring transactional durability through sequential append-only persistence.",
+  "summary": "Write-Ahead Logging (WAL) ensures ACID compliance by recording transactions to non-volatile storage before modifying the primary data files. This mechanism guarantees durability, allowing systems to reconstruct state after a crash by replaying committed logs.",
+  "key_concepts": [
+    {
+      "name": "Write-Ahead Protocol",
+      "detail": "Data modifications must be flushed to the persistent WAL file on disk before the corresponding page in the data file is updated, guaranteeing crash recovery atomicity."
+    },
+    {
+      "name": "Sequential I/O vs Random I/O",
+      "detail": "WAL leverages sequential disk writes, which are significantly faster than random access writes required to update fragmented database data files, optimizing throughput under heavy write loads."
+    },
+    {
+      "name": "Checkpointing",
+      "detail": "The process of flushing dirty pages from memory to disk and truncating the log. It minimizes recovery time (RTO) by limiting the amount of log to replay."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "fsync(fd);",
+      "explanation": "Essential syscall to force the OS kernel to flush file buffers to physical storage, ensuring the log entry is actually durable."
+    },
+    {
+      "language": "python",
+      "code": "with open('wal.log', 'ab') as f: f.write(txn_data + b'\\n'); f.flush(); os.fsync(f.fileno())",
+      "explanation": "Demonstrates the mandatory sequence: append transaction to log, flush buffers, then perform the heavy `fsync` to guarantee durability before updating application state."
+    }
+  ],
+  "best_practices": [
+    "Always use 'fsync' or synchronous write flags to bypass OS/disk controller caches for true durability.",
+    "Place WAL files on dedicated physical storage (e.g., NVMe) to prevent I/O contention with data files.",
+    "Monitor 'checkpoint' latency and frequency; frequent checkpoints increase disk wear, while infrequent ones spike recovery time.",
+    "Implement log rotation or archiving (e.g., Postgres WAL archiving) to prevent disk space exhaustion."
+  ],
+  "interview_qa": [
+    {
+      "question": "If a transaction is committed, but the power cuts before the data file is updated, how does the system recover?",
+      "answer": "Upon restart, the database engine scans the WAL from the last checkpoint. It re-applies all committed but unpersisted transactions to the data files, effectively 'replaying' the history to bring the system back to the precise state of the last committed transaction."
+    }
+  ],
+  "topic": "How Write-Ahead Logs Guarantee Your Bank Balance Never Vanishes During a Blackout",
+  "slug": "how-write-ahead-logs-guarantee-your-bank-balance-never-vanishes-during-a-blackout",
+  "keyword": "WRITE",
+  "created_at": "2026-11-28T07:35:31.969155+00:00"
+}

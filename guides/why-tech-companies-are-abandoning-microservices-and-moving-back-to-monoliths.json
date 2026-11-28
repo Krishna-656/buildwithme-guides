@@ -1,0 +1,47 @@
+{
+  "title": "Why Tech Companies Are Abandoning Microservices and Moving Back to Monoliths \u2014 Engineering Cheat Sheet",
+  "subtitle": "Complexity management through modular monoliths instead of distributed system overhead.",
+  "summary": "Engineering teams are migrating from microservices to monoliths to eliminate the 'distributed systems tax'\u2014latency, operational complexity, and data consistency hurdles. This shift prioritizes developer velocity and simplified deployment pipelines over unnecessary hyper-scale decoupling.",
+  "key_concepts": [
+    {
+      "name": "The Distributed Systems Tax",
+      "detail": "Microservices introduce non-trivial overhead including network latency, inter-service authentication, distributed tracing, and eventual consistency challenges that often exceed the performance gains for mid-scale applications."
+    },
+    {
+      "name": "Modular Monolith Architecture",
+      "detail": "A design pattern enforcing strict domain boundaries and physical separation within a single deployment unit, enabling future extraction while maintaining simple refactoring and unified CI/CD pipelines."
+    },
+    {
+      "name": "Operational Cognitive Load",
+      "detail": "Managing 50+ repositories and service meshes increases overhead. Reverting to a monolith reduces infrastructure complexity, simplifying local development environments, debugging, and cross-service atomic transactions."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "git merge --no-ff feature/service-a feature/service-b",
+      "explanation": "Consolidating disparate repositories into a single monorepo to streamline shared dependencies and unified CI/CD testing."
+    },
+    {
+      "language": "python",
+      "code": "from domain_b import BService; BService.execute()",
+      "explanation": "Replacing network-level REST/gRPC calls with direct in-process function invocation to eliminate serialization costs and network failure modes."
+    }
+  ],
+  "best_practices": [
+    "Favor internal library boundaries over network boundaries until scaling requirements necessitate physical separation.",
+    "Utilize strict directory partitioning and dependency injection to enforce module isolation within the monolith codebase.",
+    "Implement automated contract testing to prevent side-effect regressions during refactoring of shared code blocks.",
+    "Scale horizontally at the load balancer level rather than splitting the application logic into microservices prematurely."
+  ],
+  "interview_qa": [
+    {
+      "question": "When is it appropriate to abandon microservices in favor of a monolithic architecture?",
+      "answer": "Abandon microservices when the operational cost and latency of cross-service communication hinder developer velocity more than the monolith's constraints. It is an optimal transition if your domain logic is highly coupled, requiring frequent cross-service updates, or if the team lacks the infrastructure maturity to handle distributed debugging and eventual consistency."
+    }
+  ],
+  "topic": "Why Tech Companies Are Abandoning Microservices and Moving Back to Monoliths",
+  "slug": "why-tech-companies-are-abandoning-microservices-and-moving-back-to-monoliths",
+  "keyword": "TECH",
+  "created_at": "2026-11-26T16:24:09.009977+00:00"
+}

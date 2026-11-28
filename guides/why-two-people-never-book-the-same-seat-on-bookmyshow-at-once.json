@@ -1,0 +1,47 @@
+{
+  "title": "Why Two People Never Book the Same Seat on BookMyShow at Once \u2014 Engineering Cheat Sheet",
+  "subtitle": "Achieving strict concurrency control via distributed locking and atomic database transactions.",
+  "summary": "This architectural challenge centers on preventing race conditions in high-concurrency seat selection systems. By leveraging pessimistic locking or transactional isolation, platforms ensure data consistency across distributed nodes without compromising system throughput.",
+  "key_concepts": [
+    {
+      "name": "Pessimistic Locking",
+      "detail": "Uses 'SELECT ... FOR UPDATE' in SQL to lock database rows at the start of a transaction, preventing other processes from modifying or acquiring the same record."
+    },
+    {
+      "name": "Optimistic Concurrency Control",
+      "detail": "Uses versioning or timestamps; a transaction succeeds only if the seat status remains unchanged since the initial read, failing gracefully if a conflict occurs during commit."
+    },
+    {
+      "name": "Distributed Locking (Redis)",
+      "detail": "Uses Redlock or similar patterns to acquire a time-bound lease on a seat ID across distributed application servers, ensuring cross-instance synchronization before hitting the DB."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "redis-cli set seat_123_lock NX PX 30000",
+      "explanation": "Atomically acquires a lock on seat 123 for 30 seconds only if it doesn't exist (NX), preventing race conditions before DB persistence."
+    },
+    {
+      "language": "python",
+      "code": "db.session.execute('SELECT * FROM seats WHERE id = :id FOR UPDATE', {'id': 123})",
+      "explanation": "Executes a blocking row-level lock within a transaction, forcing other threads to wait until the current booking request commits or rolls back."
+    }
+  ],
+  "best_practices": [
+    "Prefer database-level row locks for strict integrity, shifting to distributed caches only when throughput exceeds RDBMS capabilities.",
+    "Implement short TTLs (Time-To-Live) on locks to prevent orphaned resources if an application service crashes mid-transaction.",
+    "Use idempotent APIs to handle client retries without creating duplicate bookings or corrupted seat states.",
+    "Maintain high observability by tracking lock contention metrics and average latency of the critical booking write path."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you prevent overbooking when thousands of users hit a single seat simultaneously?",
+      "answer": "Use strict serializable isolation levels or pessimistic row-level locking at the database layer to ensure atomicity. To scale, implement a 'Seat Reservation' cache with Redis, where the seat status moves from 'Available' to 'Held' via atomic operations before the final persistent write occurs."
+    }
+  ],
+  "topic": "Why Two People Never Book the Same Seat on BookMyShow at Once",
+  "slug": "why-two-people-never-book-the-same-seat-on-bookmyshow-at-once",
+  "keyword": "TWO",
+  "created_at": "2026-11-25T06:49:16.748256+00:00"
+}

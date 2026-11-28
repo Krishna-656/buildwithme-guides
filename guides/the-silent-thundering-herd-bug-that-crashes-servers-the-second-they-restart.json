@@ -1,0 +1,47 @@
+{
+  "title": "The Silent \"Thundering Herd\" Bug That Crashes Servers the Second They Restart \u2014 Engineering Cheat Sheet",
+  "subtitle": "Mitigating catastrophic synchronized request spikes during system recovery and cold starts.",
+  "summary": "The Thundering Herd effect occurs when a massive surge of concurrent requests simultaneously hits a backend after a cache miss or service restart, leading to cascading failures. Understanding and preventing this is critical for maintaining high availability during system recovery phases.",
+  "key_concepts": [
+    {
+      "name": "Cache Stampede",
+      "detail": "Occurs when a popular cache key expires, causing multiple concurrent processes to detect the miss and simultaneously execute expensive database queries, overwhelming the downstream storage layer."
+    },
+    {
+      "name": "Exponential Backoff with Jitter",
+      "detail": "A strategy where clients retry failed requests at exponentially increasing intervals, randomized by a jitter factor to desynchronize retry attempts and smooth out request traffic spikes."
+    },
+    {
+      "name": "Probabilistic Early Recomputation",
+      "detail": "A technique where a cache entry is recomputed before it expires based on a probability function, effectively preventing the 'all-at-once' refresh bottleneck at the deadline."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "ulimit -n 65535 # Increase open file limits",
+      "explanation": "Prevents file descriptor exhaustion when the server is hit by a sudden, massive burst of concurrent connection requests upon restart."
+    },
+    {
+      "language": "python",
+      "code": "delay = min(max_delay, base * 2**attempt) * random.uniform(0.5, 1.5)",
+      "explanation": "Implements exponential backoff with full jitter, essential for preventing client-side retry storms that worsen Thundering Herd scenarios during server recovery."
+    }
+  ],
+  "best_practices": [
+    "Implement request collapsing (coalescing) to ensure only one process fetches data for a single missing cache key.",
+    "Introduce randomized staggered startup delays for microservices to prevent synchronized resource contention on boot.",
+    "Use circuit breakers to instantly fail fast when downstream dependencies show latency spikes or high error rates.",
+    "Set cache TTLs to expire at staggered intervals rather than globally synchronized timestamps to spread the refresh load."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you distinguish between a genuine DDoS attack and a Thundering Herd effect on your API?",
+      "answer": "Thundering Herd typically follows a predictable trigger, such as a service restart or a specific cache expiration event, resulting in a spike that correlates with infrastructure telemetry. A DDoS attack usually originates from diverse, non-authenticated IP ranges and lacks the logical synchronization tied to your internal service lifecycle."
+    }
+  ],
+  "topic": "The Silent \"Thundering Herd\" Bug That Crashes Servers the Second They Restart",
+  "slug": "the-silent-thundering-herd-bug-that-crashes-servers-the-second-they-restart",
+  "keyword": "SILENT",
+  "created_at": "2026-11-27T15:36:26.865171+00:00"
+}

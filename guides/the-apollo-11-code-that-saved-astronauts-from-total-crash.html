@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Apollo 11 Code That Saved Astronauts From Total Crash — Engineering Cheat Sheet</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --border: #1f2937;
+      --accent: #6366f1;
+      --accent-light: #818cf8;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --code-bg: #030712;
+      --success: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 1.5rem;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent-light);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .btn-print {
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      border: none;
+      padding: 0.55rem 1.1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+      transition: all 0.2s ease;
+    }
+    .btn-print:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(79, 70, 229, 0.6);
+    }
+    header {
+      margin-bottom: 2rem;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--accent-light);
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1rem;
+    }
+    .summary-box {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: #fff;
+      margin: 2rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .concept-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      padding: 1rem;
+    }
+    .concept-card h4 {
+      color: var(--accent-light);
+      font-size: 0.95rem;
+      margin-bottom: 0.35rem;
+    }
+    .concept-card p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    .code-card {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .code-header {
+      background: rgba(31, 41, 55, 0.6);
+      padding: 0.4rem 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .code-lang {
+      color: var(--accent-light);
+      font-weight: 700;
+    }
+    .code-desc {
+      color: var(--text-muted);
+    }
+    pre {
+      padding: 0.85rem;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      line-height: 1.5;
+    }
+    ul.practices-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    ul.practices-list li {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+    ul.practices-list li strong {
+      color: var(--success);
+      font-size: 1rem;
+    }
+    .qa-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.6rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .qa-q {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+    .qa-a {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Print / PDF Styling */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+        padding: 0 !important;
+        font-size: 10pt;
+      }
+      .top-bar, .btn-print {
+        display: none !important;
+      }
+      .badge {
+        border: 1px solid #4f46e5;
+        color: #4f46e5;
+      }
+      h1 {
+        color: #111827 !important;
+        font-size: 1.6rem;
+      }
+      .subtitle {
+        color: #4b5563 !important;
+      }
+      .summary-box {
+        background: #f9fafb !important;
+        border: 1px solid #e5e7eb !important;
+        border-left: 4px solid #4f46e5 !important;
+        color: #111827 !important;
+      }
+      h2 {
+        color: #111827 !important;
+        border-color: #e5e7eb !important;
+      }
+      .concept-card, .qa-card, ul.practices-list li {
+        background: #f9fafb !important;
+        border-color: #e5e7eb !important;
+        color: #111827 !important;
+        page-break-inside: avoid;
+      }
+      .concept-card h4 {
+        color: #4338ca !important;
+      }
+      .code-card {
+        background: #111827 !important;
+        color: #f9fafb !important;
+        page-break-inside: avoid;
+      }
+      pre {
+        color: #f9fafb !important;
+      }
+      footer {
+        border-color: #e5e7eb !important;
+        color: #6b7280 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="top-bar">
+      <div class="brand">
+        <span>⚡</span>
+        <a href="../library.html" style="color: inherit; text-decoration: none;">Build With Me • Guide</a>
+      </div>
+      <div style="display: flex; gap: 0.6rem; align-items: center;">
+        <a href="../library.html" style="color: #94a3b8; text-decoration: none; font-size: 0.82rem; font-weight: 600; padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 0.5rem; display: inline-flex; align-items: center; gap: 0.3rem;">
+          <span>📚</span>
+          <span>All Guides</span>
+        </a>
+        <button class="btn-print" onclick="window.print()">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+          </svg>
+          <span>Save as PDF / Print</span>
+        </button>
+      </div>
+    </div>
+
+    <header>
+      <div class="badge">Technical Reference Cheat Sheet</div>
+      <h1>The Apollo 11 Code That Saved Astronauts From Total Crash — Engineering Cheat Sheet</h1>
+      <p class="subtitle">Prioritizing critical tasks via asynchronous executive scheduling under resource constraints.</p>
+      <div class="summary-box">
+        The Apollo Guidance Computer (AGC) software utilized a real-time executive to manage task preemption, ensuring mission-critical navigation kept priority during hardware overload. It serves as the foundational case study for robust error handling and fail-safe recovery in embedded real-time systems.
+      </div>
+    </header>
+
+    <h2>🏗️ Core Architecture & Flow</h2>
+    <div class="grid-2">
+      
+        <div class="concept-card">
+          <h4>Executive Priority Scheduling</h4>
+          <p>The 'Exec' program implemented a preemptive priority-based scheduler using 'job queues' to ensure critical guidance tasks interrupted non-essential telemetry tasks during CPU saturation events.</p>
+        </div>
+        
+        <div class="concept-card">
+          <h4>Restart Protection</h4>
+          <p>The system employed a soft-restart mechanism that cleared non-essential volatile memory while preserving critical state vectors, allowing the computer to recover navigation within seconds of an overflow.</p>
+        </div>
+        
+        <div class="concept-card">
+          <h4>Hardware/Software Handshaking</h4>
+          <p>The 1201/1202 alarms were triggered by hardware interrupts exceeding the cyclic executive's cycle time, forcing the software to purge low-priority tasks and resume high-priority guidance loops.</p>
+        </div>
+        
+    </div>
+
+    <h2>💻 Cheat Sheet & Key Commands</h2>
+    
+        <div class="code-card">
+          <div class="code-header">
+            <span class="code-lang">BASH</span>
+            <span class="code-desc">Simulates monitoring process priorities in real-time to identify bottlenecks causing potential system hangs or CPU saturation.</span>
+          </div>
+          <pre><code>watch -n 1 'ps -eo comm,pri,ni --sort=-pri | head -n 5'</code></pre>
+        </div>
+        
+        <div class="code-card">
+          <div class="code-header">
+            <span class="code-lang">PYTHON</span>
+            <span class="code-desc">Demonstrates a basic architectural pattern for fault-tolerant task execution, mirroring the AGC's philosophy of isolating critical loops from failure-prone sub-tasks.</span>
+          </div>
+          <pre><code>async def task_wrapper(priority, func):
+    try: await func()
+    except Exception: await recovery_routine()</code></pre>
+        </div>
+        
+
+    <h2>🛡️ Production Best Practices</h2>
+    <ul class="practices-list">
+      <li><strong>✓</strong> <span>Design for graceful degradation: Identify non-essential tasks that can be dropped during high-load scenarios.</span></li><li><strong>✓</strong> <span>Implement asynchronous state isolation: Separate critical control logic from I/O or background telemetry processing.</span></li><li><strong>✓</strong> <span>Utilize watchdog timers or software supervisors: Always maintain an external mechanism to reset the system state without total power cycling.</span></li><li><strong>✓</strong> <span>Fail fast, recover faster: Prioritize system uptime through state preservation rather than attempting total execution completion.</span></li>
+    </ul>
+
+    <h2>🎯 Interview Takeaway</h2>
+    
+        <div class="qa-card">
+          <div class="qa-q"><strong>Q:</strong> How do you handle a system overload where CPU interrupts are exceeding process capability?</div>
+          <div class="qa-a"><strong>A:</strong> Implement an event-driven scheduler that utilizes preemptive priority levels. By categorizing tasks by criticality and purging lower-level tasks when interrupts hit a threshold, the system preserves mission-critical continuity while discarding non-essential telemetry.</div>
+        </div>
+        
+
+    <footer>
+      Generated for engineering teams • Nov 23, 2026 • Save or print for offline reference
+    </footer>
+  </div>
+</body>
+</html>

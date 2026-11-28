@@ -1,0 +1,47 @@
+{
+  "title": "The Hidden Caching Bug That Can Wipe Out Your Entire Database Overnight \u2014 Engineering Cheat Sheet",
+  "subtitle": "Prevent Cache Stampedes from inducing catastrophic cascading database failure.",
+  "summary": "This bug occurs when a high-traffic cache key expires, causing concurrent requests to bypass the cache and overwhelm the underlying database. Without synchronization, this 'cache stampede' triggers a feedback loop that can exhaust connection pools and crash the storage layer.",
+  "key_concepts": [
+    {
+      "name": "Cache Stampede (Thundering Herd)",
+      "detail": "A phenomenon where simultaneous requests for an expired cache key trigger multiple expensive database queries, leading to CPU exhaustion, increased latency, and potential service-wide database outages."
+    },
+    {
+      "name": "Probabilistic Early Recomputation",
+      "detail": "A strategy using a decaying probability function to trigger cache refresh before expiration, ensuring only one worker updates the value while others serve stale data."
+    },
+    {
+      "name": "Mutex Locking (Distributed Lock)",
+      "detail": "Utilizing distributed locks (e.g., Redis SET NX) to ensure only a single process executes the database query during a cache miss, forcing others to wait/retry."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "redis-cli --scan --pattern 'my_app:key:*' | xargs redis-cli del",
+      "explanation": "Bulk-clearing keys without caution causes an immediate stampede; always use Lua scripts or background jobs to stagger expiration times."
+    },
+    {
+      "language": "python",
+      "code": "if random.random() < (1 - (current_ttl / total_ttl)): refresh_cache()",
+      "explanation": "Implements probabilistic early recomputation to spread the load of cache updates, effectively smoothing out spikes in database traffic."
+    }
+  ],
+  "best_practices": [
+    "Implement jittered expiration times to prevent multiple keys from expiring simultaneously.",
+    "Always use a distributed lock (mutex) on cache misses for expensive queries.",
+    "Configure aggressive database connection pooling and circuit breakers to isolate cache-related failures.",
+    "Implement stale-while-revalidate patterns to allow service continuity during database latency spikes."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you prevent a thundering herd problem when a globally accessed cache entry expires?",
+      "answer": "Use probabilistic early recomputation or a distributed mutex (e.g., Redis lock) to ensure only one thread performs the re-fetch. This decouples the expiration event from the heavy compute task, protecting the database from concurrent request bursts."
+    }
+  ],
+  "topic": "The Hidden Caching Bug That Can Wipe Out Your Entire Database Overnight",
+  "slug": "the-hidden-caching-bug-that-can-wipe-out-your-entire-database-overnight",
+  "keyword": "HIDDEN",
+  "created_at": "2026-11-24T22:42:16.852071+00:00"
+}

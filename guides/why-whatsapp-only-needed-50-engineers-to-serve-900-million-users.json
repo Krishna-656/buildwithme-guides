@@ -1,0 +1,47 @@
+{
+  "title": "Why WhatsApp Only Needed 50 Engineers to Serve 900 Million Users \u2014 Engineering Cheat Sheet",
+  "subtitle": "Extreme focus on minimalist tech stacks and asynchronous messaging architecture.",
+  "summary": "WhatsApp scaled to nearly a billion users by prioritizing Erlang's lightweight process model and minimizing server-side business logic. This case study demonstrates how language choice and lean architectural patterns allow small teams to manage massive concurrent connections.",
+  "key_concepts": [
+    {
+      "name": "Erlang/BEAM VM",
+      "detail": "Leveraged Erlang for its preemptive, lightweight processes. Each connection lived as a cheap process (2-3KB), enabling millions of concurrent stateful TCP connections on a single server node."
+    },
+    {
+      "name": "FreeBSD & Optimization",
+      "detail": "Used FreeBSD with custom TCP stack tweaks, maximizing kernel-level performance. By bypassing heavy application frameworks, they reduced context switching and overhead for massive real-time message throughput."
+    },
+    {
+      "name": "Mnesia & Statelessness",
+      "detail": "Kept the application layer mostly stateless, utilizing Mnesia for distributed database needs and offloading heavy data persistence to reliable, specialized storage engines to maintain low latency."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "sysctl net.inet.tcp.sendspace=65536 net.inet.tcp.recvspace=65536",
+      "explanation": "Optimizing TCP buffer sizes at the kernel level is essential for high-concurrency socket handling on FreeBSD systems."
+    },
+    {
+      "language": "erlang",
+      "code": "spawn(fun() -> handle_connection(Socket) end).",
+      "explanation": "The core of WhatsApp's scalability; spawning millions of isolated, lightweight processes ensures one crashing connection doesn't affect the entire system."
+    }
+  ],
+  "best_practices": [
+    "Choose languages based on the concurrency model (e.g., Actor model) rather than developer popularity.",
+    "Minimize server-side state; treat servers as ephemeral nodes to simplify horizontal scaling.",
+    "Avoid complex middleware and bloated frameworks that introduce unnecessary latency and resource consumption.",
+    "Focus on system observability; prioritize monitoring connection life cycles over tracking complex distributed state."
+  ],
+  "interview_qa": [
+    {
+      "question": "How did WhatsApp achieve such a high connection-to-engineer ratio?",
+      "answer": "They avoided 'feature-bloat' and high-overhead abstractions, choosing Erlang for its superior concurrency primitives. By keeping the server-side logic extremely thin and leveraging FreeBSD\u2019s networking stack, they reduced the infrastructure complexity, allowing 50 engineers to focus on stability rather than fighting resource contention."
+    }
+  ],
+  "topic": "Why WhatsApp Only Needed 50 Engineers to Serve 900 Million Users",
+  "slug": "why-whatsapp-only-needed-50-engineers-to-serve-900-million-users",
+  "keyword": "WHATSAPP",
+  "created_at": "2026-11-26T06:24:52.594992+00:00"
+}

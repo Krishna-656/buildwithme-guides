@@ -1,0 +1,47 @@
+{
+  "title": "Why GPS Satellites Must Run 38 Microseconds Faster Every Day \u2014 Engineering Cheat Sheet",
+  "subtitle": "Relativistic time dilation correction for high-precision satellite synchronization.",
+  "summary": "GPS relies on precise trilateration where clock errors translate to massive positional drift. Due to General and Special Relativity, onboard atomic clocks must be offset by 38 microseconds daily to maintain sub-meter terrestrial accuracy.",
+  "key_concepts": [
+    {
+      "name": "Special Relativity (Velocity)",
+      "detail": "Satellites orbiting at 14,000 km/h experience time dilation; their clocks tick 7 microseconds slower per day relative to stationary ground-based reference observers due to their high velocity."
+    },
+    {
+      "name": "General Relativity (Gravity)",
+      "detail": "At 20,000 km altitude, satellites experience weaker gravity than on Earth, causing their clocks to tick 45 microseconds faster per day according to the Schwarzschild metric prediction."
+    },
+    {
+      "name": "Net Relativistic Offset",
+      "detail": "The sum of the two effects (45\u00b5s - 7\u00b5s) requires engineers to offset satellite clocks by exactly 38 microseconds daily, ensuring synchronization with Earth-bound coordinated universal time (UTC)."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "date +%s.%N # Current epoch time with nanosecond precision",
+      "explanation": "Demonstrates the necessity of high-precision timestamping in distributed systems to mitigate clock drift."
+    },
+    {
+      "language": "python",
+      "code": "def apply_relativity_offset(t): return t * (1 - 4.4647e-10)",
+      "explanation": "Represents the scalar correction factor applied to onboard satellite oscillators to compensate for the net relativistic time shift."
+    }
+  ],
+  "best_practices": [
+    "Always use NTP or PTP (Precision Time Protocol) for distributed system synchronization.",
+    "Account for clock drift and skew in distributed consensus algorithms like Raft or Paxos.",
+    "Assume monotonic clocks for duration measurement and wall clocks only for external logging.",
+    "Validate upstream time sources using multiple hardware-level atomic clock references or GPS DOs."
+  ],
+  "interview_qa": [
+    {
+      "question": "If we didn't compensate for the 38\u00b5s shift, how would it impact GPS positional accuracy?",
+      "answer": "Light travels at ~300 meters per microsecond; a 38\u00b5s error equates to a range error of ~11.4 kilometers. Without relativistic correction, navigation calculations would diverge from reality in minutes, rendering the GPS system useless for modern location services."
+    }
+  ],
+  "topic": "Why GPS Satellites Must Run 38 Microseconds Faster Every Day",
+  "slug": "why-gps-satellites-must-run-38-microseconds-faster-every-day",
+  "keyword": "GPS",
+  "created_at": "2026-11-24T02:31:18.403542+00:00"
+}

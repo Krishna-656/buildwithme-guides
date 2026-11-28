@@ -1,0 +1,47 @@
+{
+  "title": "How Google\u2019s AI Designs Better Computer Chips Than Human Engineers Can \u2014 Engineering Cheat Sheet",
+  "subtitle": "Reinforcement learning optimizes chip floorplans faster than human expert teams.",
+  "summary": "Google developed a reinforcement learning (RL) agent that automates the placement of macro-blocks on a chip die. By treating physical design as a game, the AI generates super-human chip floorplans in hours versus months of iterative manual effort.",
+  "key_concepts": [
+    {
+      "name": "Macro Placement",
+      "detail": "Determines the spatial arrangement of high-performance components and memory blocks on the silicon die to minimize wire length, congestion, and power consumption while meeting strict timing constraints."
+    },
+    {
+      "name": "Reinforcement Learning (RL) Framework",
+      "detail": "Models the floorplanning task as an episodic game where an agent observes the netlist, places macros sequentially, and receives a reward based on post-placement PPA (Power, Performance, Area) metrics."
+    },
+    {
+      "name": "Force-Directed Placement",
+      "detail": "A mathematical technique used to initially spread macros based on connectivity forces, serving as a heuristic guide for the RL agent to converge on global optima more efficiently."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "python train_policy.py --env=chip_placement --reward_fn=ppa_optimizer",
+      "explanation": "Executes the RL training loop where the agent iterates through millions of placement configurations to minimize the PPA objective function."
+    },
+    {
+      "language": "python",
+      "code": "reward = -(w1 * wire_length + w2 * congestion + w3 * timing_slack)",
+      "explanation": "Weighted multi-objective reward calculation that forces the agent to balance trade-offs between competing physical design metrics in the chip architecture."
+    }
+  ],
+  "best_practices": [
+    "Define clear, quantifiable objective functions that penalize congestion early in the training loop.",
+    "Utilize pre-trained models on heterogeneous block types to accelerate convergence for new architectural iterations.",
+    "Implement automated verification pipelines to ensure AI-generated floorplans pass physical design rule checks (DRC).",
+    "Monitor agent performance against traditional simulated annealing baselines to ensure consistent PPA improvement."
+  ],
+  "interview_qa": [
+    {
+      "question": "Why is Reinforcement Learning better suited for chip floorplanning than traditional simulated annealing or human expertise?",
+      "answer": "Human design is constrained by serial trial-and-error, while simulated annealing is computationally expensive and lacks 'memory.' RL agents learn high-level feature representations from massive datasets, allowing them to predict global impacts of local placement decisions, drastically reducing design cycles from months to hours."
+    }
+  ],
+  "topic": "How Google\u2019s AI Designs Better Computer Chips Than Human Engineers Can",
+  "slug": "how-googles-ai-designs-better-computer-chips-than-human-engineers-can",
+  "keyword": "GOOGLE",
+  "created_at": "2026-11-27T11:37:50.555767+00:00"
+}

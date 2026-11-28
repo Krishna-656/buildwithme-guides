@@ -1,0 +1,47 @@
+{
+  "title": "The Submarine Cables Carrying 99% of Internet Traffic \u2014 Engineering Cheat Sheet",
+  "subtitle": "The physical backbone of global digital infrastructure and low-latency networking.",
+  "summary": "Submarine fiber optic cables represent the physical OSI Layer 1 of the global internet, moving nearly all international data traffic. Understanding this infrastructure is critical for engineers designing high-availability systems, CDN distribution, and global latency-sensitive distributed architectures.",
+  "key_concepts": [
+    {
+      "name": "DWDM (Dense Wavelength Division Multiplexing)",
+      "detail": "Optical multiplexing technique increasing bandwidth by combining multiple data signals onto a single fiber using different laser wavelengths, currently enabling terabit-per-second capacities across transoceanic distances."
+    },
+    {
+      "name": "Optical Amplification (EDFA)",
+      "detail": "Erbium-Doped Fiber Amplifiers placed at specific intervals along cables to boost signal strength without electrical conversion, mitigating signal attenuation caused by long-distance photon absorption in glass."
+    },
+    {
+      "name": "Submarine Cable Landing Stations (CLS)",
+      "detail": "The critical interface points where undersea cable systems connect to terrestrial fiber backbones, serving as high-security hubs for power feed equipment and signal regeneration nodes."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "traceroute -I <target_ip>",
+      "explanation": "Uses ICMP to visualize the multi-hop path and identify latency spikes that may indicate intercontinental transit over specific cable systems."
+    },
+    {
+      "language": "python",
+      "code": "latency = ping_latency_ms(region_a, region_b) # Approx 130-150ms NYC to London",
+      "explanation": "Used in calculating RTT budgets for distributed database consensus protocols like Paxos or Raft that are limited by physical speed-of-light constraints."
+    }
+  ],
+  "best_practices": [
+    "Design for multi-homing by utilizing diverse landing stations to prevent total regional isolation during cable cuts.",
+    "Implement asynchronous replication for cross-continental data stores to handle unavoidable RTT latency.",
+    "Utilize Anycast networking for edge delivery to route users to the nearest physical cable ingress point.",
+    "Monitor global outage maps via Submarine Cable Map APIs to anticipate regional packet loss patterns."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do submarine cables impact the design of a globally distributed database?",
+      "answer": "Latency is bounded by the speed of light in fiber (~200,000 km/s), making synchronous cross-continental writes prohibitively slow. Architects must prioritize eventual consistency or regional sharding to maintain performance."
+    }
+  ],
+  "topic": "The Submarine Cables Carrying 99% of Internet Traffic",
+  "slug": "the-submarine-cables-carrying-99-of-internet-traffic",
+  "keyword": "SUBMARINE",
+  "created_at": "2026-11-24T04:31:18.618950+00:00"
+}

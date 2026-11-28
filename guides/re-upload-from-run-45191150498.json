@@ -1,0 +1,47 @@
+{
+  "title": "Re-upload from run #45191150498 \u2014 Engineering Cheat Sheet",
+  "subtitle": "Optimizing idempotent artifact recovery and execution state restoration workflows.",
+  "summary": "This sheet details the operational protocols for handling run artifact re-uploads following execution failures. It provides a framework for maintaining state consistency, data integrity, and pipeline atomicity during post-mortem recovery operations.",
+  "key_concepts": [
+    {
+      "name": "Idempotent Ingestion",
+      "detail": "Ensures that re-uploading identical artifact payloads results in the same final system state, preventing duplicate records or corrupted execution logs within the persistent storage layer."
+    },
+    {
+      "name": "State Snapshotting",
+      "detail": "Capturing a point-in-time serialization of the execution environment to allow graceful resumption, minimizing redundant computation cycles when recovering from transient process failures or node preemptions."
+    },
+    {
+      "name": "Checksum Validation",
+      "detail": "Utilizing cryptographic hashing (SHA-256) to verify data integrity between source and target, ensuring that artifact payloads remain uncorrupted during high-concurrency re-upload and reconciliation phases."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "curl -X PUT -H 'If-None-Match: \"*\"' --upload-file ./data.bin $REMOTE_URL",
+      "explanation": "Uses conditional PUT requests to ensure atomicity, failing if the resource already exists to prevent accidental overwrites during concurrent uploads."
+    },
+    {
+      "language": "python",
+      "code": "retry(stop=stop_after_attempt(3), wait=wait_exponential())(upload_func)(payload)",
+      "explanation": "Implements exponential backoff to handle transient network partitions effectively during large artifact re-uploads to distributed object storage services."
+    }
+  ],
+  "best_practices": [
+    "Always enforce strictly monotonic versioning for uploaded artifacts to prevent state drift.",
+    "Implement circuit breakers on re-upload endpoints to protect downstream services from retry storms.",
+    "Strip PII and sensitive environment variables from artifacts prior to re-upload to maintain security posture.",
+    "Use asynchronous background workers for artifact processing to decouple system response time from upload latency."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you handle data consistency when re-uploading artifacts into an already partially processed distributed pipeline?",
+      "answer": "Utilize a 'write-once, read-many' approach combined with an atomic 'commit' flag. By checking the artifact checksum against a global transaction log before processing, you ensure that the system ignores duplicate uploads while maintaining integrity."
+    }
+  ],
+  "topic": "Re-upload from run #45191150498",
+  "slug": "re-upload-from-run-45191150498",
+  "keyword": "UPLOAD",
+  "created_at": "2026-11-24T04:55:46.059571+00:00"
+}

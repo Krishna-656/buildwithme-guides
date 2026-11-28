@@ -1,0 +1,47 @@
+{
+  "title": "Why Modern CPUs Use Out-of-Order Execution to Cheat the Speed of Light \u2014 Engineering Cheat Sheet",
+  "subtitle": "Hiding memory latency by extracting Instruction Level Parallelism dynamically at runtime.",
+  "summary": "Out-of-Order (OoO) execution enables CPUs to bypass stalled instructions by dynamically reordering a stream of operations. This masks inherent memory access latencies, allowing the processor to perform useful work while waiting for data from main memory.",
+  "key_concepts": [
+    {
+      "name": "Instruction Level Parallelism (ILP)",
+      "detail": "The measure of how many instructions can be executed simultaneously. OoO hardware exposes latent ILP in serial code by resolving data dependencies via register renaming and dispatch."
+    },
+    {
+      "name": "Register Renaming",
+      "detail": "Maps architectural registers (e.g., EAX) to a larger pool of physical registers to eliminate false dependencies (Write-After-Write/Read), allowing independent instructions to execute in parallel without hazards."
+    },
+    {
+      "name": "Speculative Execution",
+      "detail": "The CPU guesses branch outcomes and executes instructions ahead of time; results are committed only if the prediction holds, effectively hiding pipeline bubbles caused by conditional logic."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "perf stat -e stalled-cycles-frontend,stalled-cycles-backend ./app",
+      "explanation": "Identifies if your workload is bottlenecked by the front-end (branch mispredicts/instruction cache) or back-end (memory access latency) of the execution engine."
+    },
+    {
+      "language": "python",
+      "code": "arr = [process(x) for x in data if check(x)]",
+      "explanation": "High-level abstraction of branch-dependent logic; in C++, keeping these loops tight and predictable is critical for branch predictor accuracy and pipeline throughput."
+    }
+  ],
+  "best_practices": [
+    "Minimize data dependencies within tight loops to prevent pipeline stalls and reservation station saturation.",
+    "Structure code to be branch-friendly; favor bitwise logic over 'if' branches to prevent pipeline flushes.",
+    "Be aware that speculative execution creates side-channels (e.g., Spectre); use fences/barriers in security-critical paths.",
+    "Prioritize cache locality (data orientation) to keep the backend fed, as OoO cannot hide the latency of a main memory fetch."
+  ],
+  "interview_qa": [
+    {
+      "question": "How does Out-of-Order execution impact the perceived latency of memory loads?",
+      "answer": "OoO execution uses a Load-Store Queue and Reservation Stations to buffer instructions while waiting for data. By executing younger, independent instructions during a load-miss stall, the CPU hides high-latency cache misses, effectively lowering the cycles-per-instruction (CPI) closer to the ideal pipeline flow."
+    }
+  ],
+  "topic": "Why Modern CPUs Use Out-of-Order Execution to Cheat the Speed of Light",
+  "slug": "why-modern-cpus-use-out-of-order-execution-to-cheat-the-speed-of-light",
+  "keyword": "MODERN",
+  "created_at": "2026-11-28T03:34:06.656454+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Why a Single BGP Typo Can Delete the Entire Internet \u2014 Engineering Cheat Sheet",
+  "subtitle": "Understanding BGP fragility and route propagation in global internet infrastructure.",
+  "summary": "BGP is the protocol that stitches the internet together by exchanging reachability information between Autonomous Systems. Because it operates on a model of implicit trust, a configuration error or malicious hijack can cause traffic to be misrouted or dropped globally within seconds.",
+  "key_concepts": [
+    {
+      "name": "Autonomous Systems (AS)",
+      "detail": "Large networks under single administrative control that use BGP to advertise IP prefix reachability to peers; the internet is a network of these interconnected AS entities."
+    },
+    {
+      "name": "Prefix Hijacking & Leaks",
+      "detail": "Occurs when an AS incorrectly advertises ownership of IP ranges it doesn't control, causing global routers to overwrite legitimate paths with falsified or suboptimal routes."
+    },
+    {
+      "name": "BGP Convergence",
+      "detail": "The process by which all routers reach a consistent state after a topology change; slow propagation of invalid routes can lead to massive service-level blackholes."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "vtysh -c 'show ip bgp neighbor 1.2.3.4 routes'",
+      "explanation": "Inspects the specific prefix advertisements received from a BGP peer, critical for debugging route propagation issues during a global outage."
+    },
+    {
+      "language": "python",
+      "code": "ip_addr = ipaddress.ip_network('192.0.2.0/24') # Validate prefixes",
+      "explanation": "Using libraries like `ipaddress` or `pybgpstream` is vital for validating BGP updates against RPKI databases to prevent the propagation of invalid route advertisements."
+    }
+  ],
+  "best_practices": [
+    "Implement RPKI (Resource Public Key Infrastructure) to cryptographically verify the origin of IP prefixes.",
+    "Utilize Route Filters and Prefix Lists to restrict BGP updates to known, expected ranges.",
+    "Enable BGP TTL Security (GTSM) and MD5 authentication to prevent unauthorized peering sessions.",
+    "Monitor global route health using tools like BGPStream or RIPE RIS to detect anomalies in real-time."
+  ],
+  "interview_qa": [
+    {
+      "question": "How does BGP's 'implicit trust' model impact modern infrastructure security?",
+      "answer": "BGP was designed for a closed community of academic networks where authentication was secondary to connectivity. Today, this lack of built-in validation means any AS can broadcast a falsified route, and neighbors will propagate it, leading to global traffic interception or blackholing unless cryptographic mitigations like RPKI are enforced."
+    }
+  ],
+  "topic": "Why a Single BGP Typo Can Delete the Entire Internet",
+  "slug": "why-a-single-bgp-typo-can-delete-the-entire-internet",
+  "keyword": "SINGLE",
+  "created_at": "2026-11-23T12:10:45.482982+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Why Retrying a Failed API Request Can Accidentally Take Down the Entire Internet \u2014 Engineering Cheat Sheet",
+  "subtitle": "Preventing cascading failures via intelligent retry policies and circuit breakers.",
+  "summary": "Naive retry logic transforms transient failures into distributed denial-of-service (DDoS) attacks against your own infrastructure. This cheat sheet outlines how to implement resilient communication patterns to avoid triggering systemic cascading outages.",
+  "key_concepts": [
+    {
+      "name": "Retry Storms",
+      "detail": "Synchronized retry bursts from multiple clients amplify load during recovery, preventing the downstream service from stabilizing and effectively turning a single node failure into a global outage."
+    },
+    {
+      "name": "Exponential Backoff",
+      "detail": "An algorithmic approach increasing delay between successive retries (e.g., 2^n), preventing instantaneous re-flooding of a struggling service while providing time for downstream backpressure or auto-scaling to resolve."
+    },
+    {
+      "name": "Jitter",
+      "detail": "The addition of randomness to backoff intervals to break request synchronization, ensuring that retrying clients distribute load over time rather than hammering the server in lock-step cycles."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "curl --retry 3 --retry-delay 5 --retry-max-time 60 https://api.example.com",
+      "explanation": "Uses native curl retry logic; prevents manual infinite loops in scripts by setting a maximum total timeout and explicit delay."
+    },
+    {
+      "language": "python",
+      "code": "delay = min(max_delay, base * (2 ** attempt)) + random.uniform(0, 1)",
+      "explanation": "Implements exponential backoff with 'full jitter' to decorrelate client request timing and minimize the probability of server-side congestion."
+    }
+  ],
+  "best_practices": [
+    "Never retry without exponential backoff and jitter to avoid thundering herd scenarios.",
+    "Implement Circuit Breakers to stop requests entirely when failure thresholds are met, protecting downstream services.",
+    "Set absolute maximum retry limits and enforce strict request timeouts at every layer of the network.",
+    "Propagate 'Retry-After' headers from servers to intelligently inform clients when they should cease sending traffic."
+  ],
+  "interview_qa": [
+    {
+      "question": "If your service is experiencing a 503 error, why is simply adding more retries a dangerous anti-pattern?",
+      "answer": "Retrying against a saturated system adds load to an already failing dependency, worsening the bottleneck. Without backoff and circuit breaking, this creates a positive feedback loop that delays recovery and risks triggering a cascading failure across the entire architecture."
+    }
+  ],
+  "topic": "Why Retrying a Failed API Request Can Accidentally Take Down the Entire Internet",
+  "slug": "why-retrying-a-failed-api-request-can-accidentally-take-down-the-entire-internet",
+  "keyword": "RETRYING",
+  "created_at": "2026-11-26T07:54:40.785648+00:00"
+}

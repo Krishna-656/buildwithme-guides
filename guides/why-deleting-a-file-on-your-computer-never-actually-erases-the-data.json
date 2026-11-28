@@ -1,0 +1,47 @@
+{
+  "title": "Why Deleting a File on Your Computer Never Actually Erases the Data \u2014 Engineering Cheat Sheet",
+  "subtitle": "Understanding filesystem metadata, pointers, and physical storage persistence.",
+  "summary": "Deleting a file typically only removes the filesystem's reference pointer to the data blocks, leaving raw bits intact on the storage medium. For engineers, understanding this is critical for data recovery, forensic compliance, and secure sanitization protocols.",
+  "key_concepts": [
+    {
+      "name": "Filesystem Pointers",
+      "detail": "OS delete operations remove the inode or MFT entry, marking clusters as 'available' in the allocation bitmap. The actual binary data persists until overwritten by new I/O writes."
+    },
+    {
+      "name": "Wear Leveling (SSD)",
+      "detail": "Flash memory controllers abstract physical blocks from logical sectors. Overwriting a file often results in writing new data to different physical cells, leaving the original data orphaned in unmapped space."
+    },
+    {
+      "name": "Journaling & Copy-on-Write",
+      "detail": "Filesystems like ZFS or Btrfs track changes via journals or snapshots. Even after deletion, historical versions may exist in the journal, parity data, or uncompacted logs."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "shred -u -n 3 /path/to/file",
+      "explanation": "Overwrites the file three times with random data before unlinking it, mitigating bit-recovery via magnetic force microscopy."
+    },
+    {
+      "language": "python",
+      "code": "os.fsync(fd); os.remove(path)",
+      "explanation": "Ensures metadata updates are flushed to physical storage before unlinking, preventing 'ghost' remnants during power failure transitions."
+    }
+  ],
+  "best_practices": [
+    "Use cryptographic erasure (Crypto-shredding) by deleting the file's unique encryption key, rendering remaining bits unrecoverable.",
+    "Implement zero-fill or random-pattern overwriting for sensitive data buffers before releasing memory in high-security applications.",
+    "Leverage Hardware Security Modules (HSMs) or Trusted Platform Modules (TPMs) to manage keys for volume-level encryption.",
+    "Perform secure 'TRIM' commands on SSDs to inform the controller to physically scrub blocks marked as free for performance and security."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you guarantee permanent data destruction on a cloud-based block storage volume?",
+      "answer": "Standard overwriting is unreliable in virtualization due to abstraction layers and thin provisioning. The only guaranteed method is to utilize volume-level encryption, where discarding the master key effectively 'crypto-shreds' all underlying blocks simultaneously."
+    }
+  ],
+  "topic": "Why Deleting a File on Your Computer Never Actually Erases the Data",
+  "slug": "why-deleting-a-file-on-your-computer-never-actually-erases-the-data",
+  "keyword": "DELETING",
+  "created_at": "2026-11-25T18:12:19.165042+00:00"
+}

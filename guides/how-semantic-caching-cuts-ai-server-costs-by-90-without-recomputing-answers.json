@@ -1,0 +1,47 @@
+{
+  "title": "How Semantic Caching Cuts AI Server Costs by 90% Without Recomputing Answers \u2014 Engineering Cheat Sheet",
+  "subtitle": "Maximize GPU utilization by caching LLM responses using vector similarity search.",
+  "summary": "Semantic caching bypasses expensive LLM inference by retrieving semantically similar past requests from a vector store. This drastically reduces latency, decreases API consumption costs, and minimizes server load for redundant queries.",
+  "key_concepts": [
+    {
+      "name": "Vector Embeddings",
+      "detail": "High-dimensional numerical representations of queries. By converting input prompts into dense vectors, we enable mathematical distance calculations to determine intent rather than exact keyword matches."
+    },
+    {
+      "name": "Approximate Nearest Neighbor (ANN)",
+      "detail": "Algorithms like HNSW or FAISS allow sub-millisecond retrieval of the most similar historical query from a database of cached prompt-response pairs, ensuring rapid semantic lookup."
+    },
+    {
+      "name": "Similarity Thresholding",
+      "detail": "A cosine similarity score (typically 0.85-0.95) acts as the gatekeeper. Only responses with a high confidence score are served from cache; others trigger a new LLM generation."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "pip install redis langchain-community sentence-transformers",
+      "explantion": "Installs core stack: Redis (vector storage), LangChain (orchestration), and SentenceTransformers (embedding generation)."
+    },
+    {
+      "language": "python",
+      "code": "cache.lookup(query, threshold=0.92) or llm.generate(query)",
+      "explantion": "Pseudo-code pattern: Check cache with distance threshold; fallback to LLM invocation only if semantic match is below confidence score."
+    }
+  ],
+  "best_practices": [
+    "Use a dedicated vector DB (e.g., Pinecone, Milvus, or Redis) for stateful persistence.",
+    "Implement TTL (Time-To-Live) on cached responses to ensure data freshness for rapidly changing domain knowledge.",
+    "Log 'Cache Hit' vs 'Cache Miss' metrics to monitor performance and identify high-frequency query patterns.",
+    "Include query-response pairs in an LRU (Least Recently Used) cache to prevent memory bloat in high-traffic environments."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you handle the trade-off between semantic precision and false positives?",
+      "answer": "Use a strict cosine similarity threshold and incorporate metadata filtering (e.g., user ID or session context) alongside the vector search. Always implement a 'safety-first' fallback where low-confidence matches trigger a fresh LLM call to prevent hallucination propagation."
+    }
+  ],
+  "topic": "How Semantic Caching Cuts AI Server Costs by 90% Without Recomputing Answers",
+  "slug": "how-semantic-caching-cuts-ai-server-costs-by-90-without-recomputing-answers",
+  "keyword": "SEMANTIC",
+  "created_at": "2026-11-26T11:50:13.568156+00:00"
+}

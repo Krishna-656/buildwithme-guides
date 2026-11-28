@@ -1,0 +1,47 @@
+{
+  "title": "Why CPU Branch Prediction Makes Your Code 10x Faster Behind the Scenes \u2014 Engineering Cheat Sheet",
+  "subtitle": "Harnessing speculative execution to eliminate pipeline stalls and latency.",
+  "summary": "Branch prediction allows CPUs to guess execution paths before conditional results are known, keeping the instruction pipeline full. Mastering this minimizes costly flushes and pipeline stalls, directly impacting high-performance system throughput.",
+  "key_concepts": [
+    {
+      "name": "Pipeline Stalls",
+      "detail": "Occur when the CPU must wait for branch resolution before fetching subsequent instructions, essentially idling the execution units and incurring a massive latency penalty per misprediction."
+    },
+    {
+      "name": "Speculative Execution",
+      "detail": "The CPU guesses the outcome of a conditional branch and executes instructions ahead of time, discarding results if wrong or committing them if the guess is correct."
+    },
+    {
+      "name": "Branch Target Buffer (BTB)",
+      "detail": "A high-speed hardware cache storing addresses of previous jump targets, allowing the CPU to predict not just the branch outcome, but also the destination address."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "cpp",
+      "code": "if (__builtin_expect(condition, 1)) { /* likely path */ }",
+      "explanation": "Provides compiler hints to structure code so the most likely branch occupies the fall-through path, improving instruction cache locality and branch predictor efficiency."
+    },
+    {
+      "language": "python",
+      "code": "data.sort(); # Process sorted data",
+      "explanation": "Sorting input data before conditional processing makes branches highly predictable, allowing the CPU to execute loops with near-zero misprediction overhead."
+    }
+  ],
+  "best_practices": [
+    "Prefer branchless logic using conditional moves (CMOV) or bitwise operations for performance-critical hot paths.",
+    "Order if-else chains based on frequency of occurrence, placing the most common case in the first block.",
+    "Minimize complex nested conditionals within tight loops to prevent exhausting the Branch Target Buffer capacity.",
+    "Profile code with hardware counters (e.g., perf) to identify misprediction ratios before prematurely optimizing branch logic."
+  ],
+  "interview_qa": [
+    {
+      "question": "Why does sorting an array significantly speed up a loop containing a simple 'if' condition?",
+      "answer": "Sorting minimizes the frequency of conditional transitions, creating a pattern the Branch Predictor can easily track. This prevents pipeline flushes caused by unexpected branch outcomes, allowing the CPU to sustain maximum throughput via speculative execution."
+    }
+  ],
+  "topic": "Why CPU Branch Prediction Makes Your Code 10x Faster Behind the Scenes",
+  "slug": "why-cpu-branch-prediction-makes-your-code-10x-faster-behind-the-scenes",
+  "keyword": "CPU",
+  "created_at": "2026-11-25T18:47:27.436267+00:00"
+}

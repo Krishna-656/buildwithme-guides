@@ -1,0 +1,47 @@
+{
+  "title": "Why Wi-Fi Signals Pass Through Glass But Die in Walls \u2014 Engineering Cheat Sheet",
+  "subtitle": "Physics-based propagation logic for network performance and signal optimization.",
+  "summary": "Wi-Fi signals operate as electromagnetic waves that experience varying degrees of attenuation based on material permittivity and conductivity. Understanding these interactions is critical for engineers designing stable IoT deployments, high-density office networks, or reliable edge computing connectivity.",
+  "key_concepts": [
+    {
+      "name": "Electromagnetic Attenuation",
+      "detail": "Signal loss occurs when energy is converted to heat via absorption or reflected by high-density materials like concrete, brick, or metal, which possess high dielectric constants."
+    },
+    {
+      "name": "Material Permittivity",
+      "detail": "Glass has low permittivity, allowing waves to pass with minimal phase shift. Walls, particularly reinforced concrete, contain rebar acting as a Faraday cage, reflecting or trapping signals."
+    },
+    {
+      "name": "Fresnel Zone Clearance",
+      "detail": "Beyond simple Line-of-Sight, RF performance requires clearance of the Fresnel zone to avoid phase cancellation caused by reflections off nearby physical obstacles and surfaces."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "iwlist wlan0 scan | grep -E 'SSID|Signal|Quality'",
+      "explanation": "Quickly assess signal strength (dBm) and link quality to identify environmental interference or material blocking."
+    },
+    {
+      "language": "python",
+      "code": "fspl = 20 * math.log10(d) + 20 * math.log10(f) - 147.55",
+      "explanation": "Calculates Free Space Path Loss (FSPL) in dB; baseline metric before accounting for wall/obstacle penetration loss (dB attenuation factor)."
+    }
+  ],
+  "best_practices": [
+    "Prioritize line-of-sight placement for Access Points to avoid multi-wall penetration.",
+    "Use 2.4GHz for better penetration through physical obstacles compared to the shorter-range 5GHz/6GHz bands.",
+    "Perform a site survey using heatmap software to identify signal shadow zones caused by high-density materials.",
+    "Deploy mesh nodes or wired backhaul APs when physical barriers introduce >20dB of signal attenuation."
+  ],
+  "interview_qa": [
+    {
+      "question": "Why does a 5GHz signal drop off significantly faster than 2.4GHz when passing through a brick wall?",
+      "answer": "Higher frequency signals have shorter wavelengths, which are more easily absorbed by the molecules in dense materials like brick. Furthermore, high-frequency signals exhibit lower diffraction capabilities, making it harder for them to 'bend' around obstacles compared to the longer wavelengths of 2.4GHz."
+    }
+  ],
+  "topic": "Why Wi-Fi Signals Pass Through Glass But Die in Walls",
+  "slug": "why-wi-fi-signals-pass-through-glass-but-die-in-walls",
+  "keyword": "SIGNALS",
+  "created_at": "2026-11-24T00:32:30.827963+00:00"
+}

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architecture Guides &amp; Cheat Sheets - Build With Me</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --border: #1f2937;
+      --accent: #6366f1;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+    .nav-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #818cf8;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    .sheet-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .sheet-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .sheet-card h2 {
+      font-size: 1.25rem;
+      margin: 0.75rem 0 1rem;
+      color: #fff;
+    }
+    .badge {
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.55rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⚡ Build With Me • Architecture Library</h1>
+    <p class="subtitle">Free printable cheat sheets, distributed systems patterns, and engineering breakdowns.</p>
+    <a href="index.html" class="nav-link">🔥 Open Latest Cheat Sheet →</a>
+  </header>
+  <div class="grid">
+    
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>OPEN</strong></span>
+          </div>
+          <h2>Why Open-Source RISC-V Chips Are Threatening Intel and ARM’s Decades-Long Monopoly — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-open-source-risc-v-chips-are-threatening-intel-and-arms-decades-long-monopoly.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>TINY</strong></span>
+          </div>
+          <h2>The Tiny Bloom Filter Trick That Checks Billions of Usernames in Milliseconds — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-tiny-bloom-filter-trick-that-checks-billions-of-usernames-in-milliseconds.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SIGNALS</strong></span>
+          </div>
+          <h2>Why Wi-Fi Signals Pass Through Glass But Die in Walls — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-wi-fi-signals-pass-through-glass-but-die-in-walls.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>WHATSAPP</strong></span>
+          </div>
+          <h2>Why WhatsApp Only Needed 50 Engineers to Serve 900 Million Users — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-whatsapp-only-needed-50-engineers-to-serve-900-million-users.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SINGLE</strong></span>
+          </div>
+          <h2>Why a Single BGP Typo Can Delete the Entire Internet — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-a-single-bgp-typo-can-delete-the-entire-internet.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>RETRYING</strong></span>
+          </div>
+          <h2>Why Retrying a Failed API Request Can Accidentally Take Down the Entire Internet — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-retrying-a-failed-api-request-can-accidentally-take-down-the-entire-internet.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>MODERN</strong></span>
+          </div>
+          <h2>Why Modern Airplanes Can't Fly in Straight Lines — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-modern-airplanes-cant-fly-in-straight-lines.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>TECH</strong></span>
+          </div>
+          <h2>Why Tech Companies Are Abandoning Microservices and Moving Back to Monoliths — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-tech-companies-are-abandoning-microservices-and-moving-back-to-monoliths.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SPECULATIVE</strong></span>
+          </div>
+          <h2>Why Speculative Execution Exposed the Biggest Hardware Security Flaw in History — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-speculative-execution-exposed-the-biggest-hardware-security-flaw-in-history.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>MODERN</strong></span>
+          </div>
+          <h2>Why Modern Jet Engines Don't Stall at 35,000 Feet — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-modern-jet-engines-dont-stall-at-35000-feet.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>GPS</strong></span>
+          </div>
+          <h2>Why GPS Satellites Must Run 38 Microseconds Faster Every Day — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-gps-satellites-must-run-38-microseconds-faster-every-day.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>NEW</strong></span>
+          </div>
+          <h2>Why New Paint Can Cool Down Buildings Without Any Electricity — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-new-paint-can-cool-down-buildings-without-any-electricity.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>MODERN</strong></span>
+          </div>
+          <h2>Why Modern CPUs Use Out-of-Order Execution to Cheat the Speed of Light — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-modern-cpus-use-out-of-order-execution-to-cheat-the-speed-of-light.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SUBMARINE</strong></span>
+          </div>
+          <h2>The Submarine Cables Carrying 99% of Internet Traffic — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-submarine-cables-carrying-99-of-internet-traffic.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>TWO</strong></span>
+          </div>
+          <h2>Why Two People Never Book the Same Seat on BookMyShow at Once — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-two-people-never-book-the-same-seat-on-bookmyshow-at-once.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SPACE</strong></span>
+          </div>
+          <h2>The Space Invaders Glitch That Created Video Game Difficulty — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-space-invaders-glitch-that-created-video-game-difficulty.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>DELETING</strong></span>
+          </div>
+          <h2>Why Deleting a File on Your Computer Never Actually Erases the Data — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-deleting-a-file-on-your-computer-never-actually-erases-the-data.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>CPU</strong></span>
+          </div>
+          <h2>Why CPU Branch Prediction Makes Your Code 10x Faster Behind the Scenes — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/why-cpu-branch-prediction-makes-your-code-10x-faster-behind-the-scenes.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>ONE</strong></span>
+          </div>
+          <h2>How One Missing Idempotency Key Can Charge Your Credit Card 100 Times — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-one-missing-idempotency-key-can-charge-your-credit-card-100-times.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>APACHE</strong></span>
+          </div>
+          <h2>Apache Kafka vs RabbitMQ — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/apache-kafka-vs-rabbitmq.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>APOLLO</strong></span>
+          </div>
+          <h2>The Apollo 11 Code That Saved Astronauts From Total Crash — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-apollo-11-code-that-saved-astronauts-from-total-crash.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>UPLOAD</strong></span>
+          </div>
+          <h2>Re-upload from run #45191150498 — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/re-upload-from-run-45191150498.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>HIDDEN</strong></span>
+          </div>
+          <h2>The Hidden Caching Bug That Can Wipe Out Your Entire Database Overnight — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-hidden-caching-bug-that-can-wipe-out-your-entire-database-overnight.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SILENT</strong></span>
+          </div>
+          <h2>The Silent "Thundering Herd" Bug That Crashes Servers the Second They Restart — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-silent-thundering-herd-bug-that-crashes-servers-the-second-they-restart.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>DISCORD</strong></span>
+          </div>
+          <h2>How Discord Stores Trillions of Messages Without Slowing Down — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-discord-stores-trillions-of-messages-without-slowing-down.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SEMANTIC</strong></span>
+          </div>
+          <h2>How Semantic Caching Cuts AI Server Costs by 90% Without Recomputing Answers — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-semantic-caching-cuts-ai-server-costs-by-90-without-recomputing-answers.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>WRITE</strong></span>
+          </div>
+          <h2>How Write-Ahead Logs Guarantee Your Bank Balance Never Vanishes During a Blackout — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-write-ahead-logs-guarantee-your-bank-balance-never-vanishes-during-a-blackout.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>UPLOAD</strong></span>
+          </div>
+          <h2>Re-upload from run #45217240872 — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/re-upload-from-run-45217240872.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>APACHE</strong></span>
+          </div>
+          <h2>Apache Kafka vs RabbitMQ Architecture — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/apache-kafka-vs-rabbitmq-architecture.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>GOOGLE</strong></span>
+          </div>
+          <h2>How Google’s AI Designs Better Computer Chips Than Human Engineers Can — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-googles-ai-designs-better-computer-chips-than-human-engineers-can.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SINGLE</strong></span>
+          </div>
+          <h2>How a Single Typo in 2008 Crashed 20% of Global YouTube — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-a-single-typo-in-2008-crashed-20-of-global-youtube.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>UBER</strong></span>
+          </div>
+          <h2>How Uber Tracks 1 Million Drivers Every Second Without Crashing — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-uber-tracks-1-million-drivers-every-second-without-crashing.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>NETFLIX</strong></span>
+          </div>
+          <h2>How Netflix Streams 4K Video Smoothly Even on Terrible Wi-Fi — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-netflix-streams-4k-video-smoothly-even-on-terrible-wi-fi.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>UPLOAD</strong></span>
+          </div>
+          <h2>Re-upload from run #45202009103 — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/re-upload-from-run-45202009103.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>SPOTIFY</strong></span>
+          </div>
+          <h2>How Spotify Predicts Your Next Favorite Song Using Vector Databases — Engineering Cheat Sheet</h2>
+          <div class="actions">
+            <a class="btn" href="guides/how-spotify-predicts-your-next-favorite-song-using-vector-databases.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+        <div class="sheet-card">
+          <div class="sheet-meta">
+            <span class="badge">💬 Keyword: <strong>BIT</strong></span>
+          </div>
+          <h2>The 32-Bit Integer Overflow Gangnam Style Caused on YouTube — Quick Engineering Reference</h2>
+          <div class="actions">
+            <a class="btn" href="guides/the-32-bit-integer-overflow-gangnam-style-caused-on-youtube.html">📄 Open Cheat Sheet</a>
+          </div>
+        </div>
+            
+  </div>
+</div>
+</body>
+</html>

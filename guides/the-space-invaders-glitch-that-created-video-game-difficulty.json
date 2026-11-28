@@ -1,0 +1,47 @@
+{
+  "title": "The Space Invaders Glitch That Created Video Game Difficulty \u2014 Engineering Cheat Sheet",
+  "subtitle": "How processor load inadvertently pioneered adaptive difficulty scaling in gaming history.",
+  "summary": "In the original 1978 Space Invaders, the CPU struggled to process the increasing number of sprites, causing the game to run faster as enemies were destroyed. Engineers discovered this unintended performance bottleneck actually created a superior user experience, accidentally inventing dynamic difficulty adjustment (DDA).",
+  "key_concepts": [
+    {
+      "name": "CPU Sprite Throughput",
+      "detail": "The Intel 8080 processor's render cycle duration was directly proportional to the number of active objects, creating an inverse relationship between entity count and frame latency."
+    },
+    {
+      "name": "Implicit Dynamic Scaling",
+      "detail": "As enemies vanished, CPU clock cycles per frame decreased, naturally increasing the game's execution speed. This unintended performance optimization resulted in a feedback loop of escalating difficulty."
+    },
+    {
+      "name": "Performance-as-Gameplay",
+      "detail": "A critical lesson in game design where hardware limitations and execution bottlenecks are transformed into emergent mechanics, blurring the line between software defects and intended features."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "watch -n 0.1 'ps -eo pcpu,pid,comm | grep game_engine'",
+      "explanation": "Monitor process CPU utilization in real-time to observe how frame execution duration fluctuates based on the number of active background processes or game entities."
+    },
+    {
+      "language": "python",
+      "code": "def update_difficulty(entities):\n    # Simulate framerate increase as entity count drops\n    framerate = BASE_RATE + (MAX_ENTITIES - len(entities)) * SCALING_FACTOR",
+      "explanation": "Demonstrates the logic behind adaptive difficulty: using current resource load or game-state volume to programmatically adjust the game clock frequency."
+    }
+  ],
+  "best_practices": [
+    "Design for predictable frame times rather than relying on hardware-dependent execution loops.",
+    "Implement explicit frame rate capping to decouple game simulation speed from CPU cycles.",
+    "Utilize observability tools to measure system latency during high-load periods to identify unexpected performance bottlenecks.",
+    "Treat emergent behaviors resulting from technical debt as potential design features before refactoring them away."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you distinguish between a performance defect and a desirable emergent behavior in a real-time system?",
+      "answer": "Evaluate the impact on user experience and the consistency of the behavior. If the 'defect' enhances engagement or creates a rewarding feedback loop, document it as a feature; if it introduces non-deterministic instability, it must be normalized via fixed-timestep updates."
+    }
+  ],
+  "topic": "The Space Invaders Glitch That Created Video Game Difficulty",
+  "slug": "the-space-invaders-glitch-that-created-video-game-difficulty",
+  "keyword": "SPACE",
+  "created_at": "2026-11-24T08:31:45.873498+00:00"
+}

@@ -1,0 +1,47 @@
+{
+  "title": "The Apollo 11 Code That Saved Astronauts From Total Crash \u2014 Engineering Cheat Sheet",
+  "subtitle": "Prioritizing critical tasks via asynchronous executive scheduling under resource constraints.",
+  "summary": "The Apollo Guidance Computer (AGC) software utilized a real-time executive to manage task preemption, ensuring mission-critical navigation kept priority during hardware overload. It serves as the foundational case study for robust error handling and fail-safe recovery in embedded real-time systems.",
+  "key_concepts": [
+    {
+      "name": "Executive Priority Scheduling",
+      "detail": "The 'Exec' program implemented a preemptive priority-based scheduler using 'job queues' to ensure critical guidance tasks interrupted non-essential telemetry tasks during CPU saturation events."
+    },
+    {
+      "name": "Restart Protection",
+      "detail": "The system employed a soft-restart mechanism that cleared non-essential volatile memory while preserving critical state vectors, allowing the computer to recover navigation within seconds of an overflow."
+    },
+    {
+      "name": "Hardware/Software Handshaking",
+      "detail": "The 1201/1202 alarms were triggered by hardware interrupts exceeding the cyclic executive's cycle time, forcing the software to purge low-priority tasks and resume high-priority guidance loops."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "watch -n 1 'ps -eo comm,pri,ni --sort=-pri | head -n 5'",
+      "explanation": "Simulates monitoring process priorities in real-time to identify bottlenecks causing potential system hangs or CPU saturation."
+    },
+    {
+      "language": "python",
+      "code": "async def task_wrapper(priority, func):\n    try: await func()\n    except Exception: await recovery_routine()",
+      "explanation": "Demonstrates a basic architectural pattern for fault-tolerant task execution, mirroring the AGC's philosophy of isolating critical loops from failure-prone sub-tasks."
+    }
+  ],
+  "best_practices": [
+    "Design for graceful degradation: Identify non-essential tasks that can be dropped during high-load scenarios.",
+    "Implement asynchronous state isolation: Separate critical control logic from I/O or background telemetry processing.",
+    "Utilize watchdog timers or software supervisors: Always maintain an external mechanism to reset the system state without total power cycling.",
+    "Fail fast, recover faster: Prioritize system uptime through state preservation rather than attempting total execution completion."
+  ],
+  "interview_qa": [
+    {
+      "question": "How do you handle a system overload where CPU interrupts are exceeding process capability?",
+      "answer": "Implement an event-driven scheduler that utilizes preemptive priority levels. By categorizing tasks by criticality and purging lower-level tasks when interrupts hit a threshold, the system preserves mission-critical continuity while discarding non-essential telemetry."
+    }
+  ],
+  "topic": "The Apollo 11 Code That Saved Astronauts From Total Crash",
+  "slug": "the-apollo-11-code-that-saved-astronauts-from-total-crash",
+  "keyword": "APOLLO",
+  "created_at": "2026-11-23T14:06:10.849223+00:00"
+}

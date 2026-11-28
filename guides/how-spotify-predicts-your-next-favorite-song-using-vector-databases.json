@@ -1,0 +1,47 @@
+{
+  "title": "How Spotify Predicts Your Next Favorite Song Using Vector Databases \u2014 Engineering Cheat Sheet",
+  "subtitle": "Leveraging high-dimensional embeddings for low-latency, scalable music recommendation engines.",
+  "summary": "Spotify utilizes vector embeddings to map audio features and user preferences into a multi-dimensional latent space. By indexing these vectors in specialized databases, they perform rapid Approximate Nearest Neighbor (ANN) searches to surface relevant recommendations in milliseconds.",
+  "key_concepts": [
+    {
+      "name": "Audio Embeddings",
+      "detail": "CNNs and sequence models (like Transformers) compress raw waveforms into d-dimensional float vectors representing timbre, rhythm, and mood, enabling mathematical comparison of disparate musical styles."
+    },
+    {
+      "name": "Approximate Nearest Neighbor (ANN)",
+      "detail": "Techniques like HNSW (Hierarchical Navigable Small World) or IVF-Flat index vectors to avoid exhaustive linear scans, providing logarithmic search complexity required for millions of concurrent users."
+    },
+    {
+      "name": "Latent Space Mapping",
+      "detail": "A shared geometric space where user historical vectors and track vectors are plotted; proximity in this vector space indicates high probability of user engagement and preference."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "docker run -p 8000:8000 qdrant/qdrant",
+      "explanation": "Spinning up a local instance of a production-ready vector database to begin testing similarity search capabilities."
+    },
+    {
+      "language": "python",
+      "code": "index.search(query_vector, k=10, search_type='hnsw')",
+      "explanation": "Executing a high-performance vector query; HNSW graph traversal is used here to find the 10 closest tracks to the user's current latent preference vector."
+    }
+  ],
+  "best_practices": [
+    "Use HNSW indexing for read-heavy recommendation workloads to balance search latency against memory overhead.",
+    "Implement asynchronous vector index updates to decouple heavy compute embedding generation from real-time serving paths.",
+    "Monitor vector drift and stale embeddings by implementing automated re-indexing pipelines as user consumption patterns shift over time.",
+    "Compress high-dimensional vectors using Product Quantization (PQ) to reduce memory footprint when scaling to billions of items."
+  ],
+  "interview_qa": [
+    {
+      "question": "Why choose ANN over exact K-Nearest Neighbor (k-NN) for a production music system?",
+      "answer": "Exact k-NN requires O(N) linear scans, which is computationally prohibitive at Spotify's scale of billions of tracks. ANN provides sub-linear O(log N) performance, trading off negligible recall accuracy for the sub-50ms latency required for real-time user experience."
+    }
+  ],
+  "topic": "How Spotify Predicts Your Next Favorite Song Using Vector Databases",
+  "slug": "how-spotify-predicts-your-next-favorite-song-using-vector-databases",
+  "keyword": "SPOTIFY",
+  "created_at": "2026-11-25T22:47:08.763730+00:00"
+}

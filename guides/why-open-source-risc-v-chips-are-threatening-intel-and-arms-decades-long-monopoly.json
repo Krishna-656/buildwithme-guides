@@ -1,0 +1,47 @@
+{
+  "title": "Why Open-Source RISC-V Chips Are Threatening Intel and ARM\u2019s Decades-Long Monopoly \u2014 Engineering Cheat Sheet",
+  "subtitle": "Modular, royalty-free ISA disrupting proprietary silicon dominance via open collaboration.",
+  "summary": "RISC-V is an open-standard Instruction Set Architecture (ISA) that eliminates vendor lock-in and licensing fees by allowing developers to design custom, royalty-free processors. For software engineers, it represents a shift toward hardware-software co-design and democratized access to high-performance computing architectures.",
+  "key_concepts": [
+    {
+      "name": "Load-Store Architecture",
+      "detail": "RISC-V follows a strictly load-store design, separating memory access from arithmetic instructions, which simplifies pipeline implementation, enhances clock speeds, and improves compiler optimization efficiency for modern silicon."
+    },
+    {
+      "name": "Modular ISA Design",
+      "detail": "Unlike CISC, RISC-V uses a small base integer ISA (RV32I/RV64I) with optional standard extensions (M, A, F, D, C, V), allowing designers to include only necessary hardware logic."
+    },
+    {
+      "name": "Hardware-Software Co-design",
+      "detail": "Engineers can add custom instructions for specific workloads\u2014like AI inference or cryptography\u2014without needing licensing approval, drastically reducing latency and power consumption for specialized high-compute applications."
+    }
+  ],
+  "code_cheatsheet": [
+    {
+      "language": "bash",
+      "code": "riscv64-unknown-elf-gcc -march=rv64gc -mabi=lp64d main.c -o main.elf",
+      "explanation": "Compiles code for 64-bit RISC-V using the 'gc' extension set (General-purpose + Compressed instructions) and the lp64d ABI for double-precision float support."
+    },
+    {
+      "language": "python",
+      "code": "import subprocess\nsubprocess.run(['spike', 'pk', 'binary_file'])",
+      "explanation": "Utilizes 'Spike', the official RISC-V ISA simulator, to execute and debug binary files in a virtual environment without needing physical FPGA hardware."
+    }
+  ],
+  "best_practices": [
+    "Prioritize the base ISA (RV64IM) for maximum compatibility across common GCC/LLVM toolchains.",
+    "Leverage the 'C' (Compressed) extension to reduce binary size and cache footprint for embedded systems.",
+    "Utilize standard memory ordering models to ensure consistent multi-core cache coherency across different implementations.",
+    "Profile custom ISA extensions with cycle-accurate simulators before committing to hard silicon gates."
+  ],
+  "interview_qa": [
+    {
+      "question": "How does RISC-V\u2019s open ISA differ from ARM\u2019s licensing model, and what impact does this have on hardware development?",
+      "answer": "ARM licenses their proprietary micro-architecture for a fee, restricting modifications to ensure standard performance. RISC-V provides an open specification, allowing companies to design custom chips with proprietary secret-sauce extensions without licensing fees, effectively commoditizing the base CPU logic."
+    }
+  ],
+  "topic": "Why Open-Source RISC-V Chips Are Threatening Intel and ARM\u2019s Decades-Long Monopoly",
+  "slug": "why-open-source-risc-v-chips-are-threatening-intel-and-arms-decades-long-monopoly",
+  "keyword": "OPEN",
+  "created_at": "2026-11-28T11:36:28.472713+00:00"
+}
